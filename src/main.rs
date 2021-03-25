@@ -8,6 +8,7 @@ include!("lkl_next_5.10_host_h_bindgen.rs");
 extern "C" { fn dbg_entrance(); }
 
 use std::ffi::CString;
+use walkley_usb::os_usb;
 
 fn main() {
     let ret;
@@ -18,6 +19,12 @@ fn main() {
     }
     if ret < 0 {
         panic!("lkl_start_kernel() failed: {}", ret);
+    }
+
+    // TODO filter based on vendor and product ids
+    match os_usb::devs_iterate() {
+        None => panic!("failed to iterate USB devices"),
+        Some(stat) => println!("processed {} USB devices", stat),
     }
 
     unsafe {

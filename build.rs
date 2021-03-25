@@ -9,4 +9,7 @@ fn main() {
     println!("cargo:rustc-link-search=native={}/tools/lkl/", lkl_dir);
     println!("cargo:rustc-link-lib=static=lkl");
     println!("cargo:rerun-if-changed={}/tools/lkl/liblkl.a", lkl_dir);
+
+    // link against system libusb
+    println!("cargo:rustc-link-lib=dylib=usb-1.0");
 }

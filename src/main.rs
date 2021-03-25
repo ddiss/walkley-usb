@@ -5,6 +5,7 @@
 #![allow(non_snake_case)]
 
 include!("lkl_next_5.10_host_h_bindgen.rs");
+extern "C" { fn dbg_entrance(); }
 
 use std::ffi::CString;
 
@@ -19,7 +20,10 @@ fn main() {
         panic!("lkl_start_kernel() failed: {}", ret);
     }
 
-    unsafe { lkl_sys_halt(); }
+    unsafe {
+        dbg_entrance();
+        lkl_sys_halt();
+    }
 }
 
 #[cfg(test)]
